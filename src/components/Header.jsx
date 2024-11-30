@@ -13,7 +13,7 @@ const Header = () => {
         <div className="flex justify-between items-center mx-4 p-0.5">
           <div className="flex items-center">
             {/* Add logo here */}
-            <img src={logo} alt="Logo" className="h-auto max-w-[100px] cursor-pointer" />
+            <img src={logo} alt="Logo" className="h-auto max-w-[100px]  cursor-pointer" />
           </div>
 
           <div className="flex items-center">
@@ -21,10 +21,10 @@ const Header = () => {
               <input
                 type="text"
                 placeholder="Search for products..."
-                className="   bg-[#e0c7e1] block w-[512px] pl-4 pr-12 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                className="   bg-[#e0c7e1] block w-[512px] pl-4 pr-12 py-2 border border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
               />
               {/* Search Button with Icon */}
-              <button className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-500 hover:text-gray-700">
+              <button className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-500 hover:text-gray-800">
                 <FiSearch className="h-5 w-5" />
               </button>
             </div>
@@ -36,10 +36,10 @@ const Header = () => {
               <MdLightMode />
             </div> */}
 
-            <div className="cursor-pointer text-2xl text-[#172554]">
+            <div className="cursor-pointer text-2xl ">
               <IoNotifications />
             </div>
-            <div className="cursor-pointer text-2xl text-[#172554]">
+            <div className="cursor-pointer text-2xl">
               <FaUserCircle />
             </div>
           </div>

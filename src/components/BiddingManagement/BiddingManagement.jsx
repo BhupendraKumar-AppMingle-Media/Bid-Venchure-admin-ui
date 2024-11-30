@@ -54,12 +54,15 @@ const BiddingManagement = () => {
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Bidding Management</h1>
-        <p className="text-sm text-gray-500">Manage and analyze bids placed by restaurants.</p>
+        {/* <h1 className="text-2xl font-bold text-gray-800">Bidding Management</h1> */}
+        <h1 className="text-4xl font-bold text-center ">
+        Bidding Management
+        </h1>
+        <p className="text-sm  text-center text-gray-500">Manage and analyze bids placed by restaurants.</p>
       </div>
 
       {/* Analytics Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div className="p-4 bg-white shadow rounded-lg">
           <h2 className="text-lg font-semibold text-gray-700">Average Bid Amount</h2>
           <p className="text-2xl font-bold text-orange-500">₹{analytics.averageBidAmount}</p>
@@ -72,16 +75,16 @@ const BiddingManagement = () => {
           <h2 className="text-lg font-semibold text-gray-700">Most Bids</h2>
           <p className="text-xl font-bold text-blue-500">{analytics.mostBids}</p>
         </div>
-      </div>
+      </div> */}
 
       {/* Bids Table */}
       <div className="bg-white shadow rounded-lg">
-        <div className="p-4 border-b">
+        {/* <div className="p-4 border-b">
           <h2 className="text-lg font-semibold text-gray-700">All Bids</h2>
-        </div>
+        </div> */}
         <table className="w-full table-auto border-collapse">
           <thead>
-            <tr className="bg-gray-50 text-left text-sm text-gray-600">
+            <tr className=" text-left text-sm bg-[#e99dad]">
               <th className="p-4 border">Restaurant</th>
               <th className="p-4 border">Event</th>
               <th className="p-4 border">Bid Amount</th>
@@ -91,7 +94,7 @@ const BiddingManagement = () => {
           </thead>
           <tbody>
             {bids.map((bid) => (
-              <tr key={bid.id} className="text-sm text-gray-700">
+              <tr key={bid.id} className="text-sm hover:bg-[#ece0f2]">
                 <td className="p-4 border">{bid.restaurant}</td>
                 <td className="p-4 border">{bid.event}</td>
                 <td className="p-4 border">₹{bid.bidAmount}</td>

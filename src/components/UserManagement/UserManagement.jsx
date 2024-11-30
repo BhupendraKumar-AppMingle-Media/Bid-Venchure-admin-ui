@@ -1,37 +1,60 @@
-import React, { useState } from 'react';
-import { navigate, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { FaTrashAlt, FaPowerOff, FaCheckCircle } from "react-icons/fa"; // Import icons
+import { useNavigate } from "react-router-dom";
+import { MdPreview } from "react-icons/md";
 
 const UserManagement = () => {
+  const navigate = useNavigate();
 
-    let navigate=useNavigate();
-
+  // Initial state for users
   const [users, setUsers] = useState([
-    { id: 1, name: 'John Doe', contact: 'john@example.com', date: '2024-01-01', status: 'active' },
-    { id: 2, name: 'Jane Smith', contact: 'jane@example.com', date: '2024-02-01', status: 'inactive' },
+    {
+      id: 1,
+      name: "John Doe",
+      contact: "237468372",
+      date: "2024-01-01",
+      location: "New York",
+      gender: "Male",
+      status: "active",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      contact: "2837472423",
+      date: "2024-02-01",
+      location: "Los Angeles",
+      gender: "Female",
+      status: "inactive",
+    },
     // Add more users as needed
   ]);
 
+  // Toggle the user's status (active/inactive)
   const handleStatusToggle = (id) => {
-    setUsers(users.map(user =>
-      user.id === id ? { ...user, status: user.status === 'active' ? 'inactive' : 'active' } : user
-    ));
+    setUsers(
+      users.map((user) =>
+        user.id === id
+          ? { ...user, status: user.status === "active" ? "inactive" : "active" }
+          : user
+      )
+    );
   };
 
-  const handleEdit=()=>{
-    alert("Click ok for edit user ");
-    
-      navigate("/edit-user-management");
-  }
+  // Navigate to preview page
+  const handlePreview = () => {
+    navigate("/preview-user-management");
+  };
 
-  const handleBack=()=>{
-    navigate("-1");
-  }
+  // Go back to the previous page
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   return (
     <div className="p-6">
-        <h2 className="text-2xl text-centre font-bold mb-4">User Management</h2>
+      <h1 className="text-4xl font-bold text-center">User Management</h1>
       <div className="flex justify-between items-center mb-4">
-        <button  onClick={handleBack}  className="text-blue-600 hover:text-blue-800">
+        <button onClick={handleBack} className="text-blue-600 hover:text-blue-800">
           <i className="fas fa-arrow-left"></i> Back
         </button>
         <div className="relative w-1/3">
@@ -42,41 +65,72 @@ const UserManagement = () => {
           />
         </div>
       </div>
-      
-      <table className="min-w-full bg-white border border-gray-200">
+
+      <table className="min-w-full bg-white border">
         <thead>
-          <tr>
-            <th className="p-3 border-b">Name</th>
-            <th className="p-3 border-b">Contact Information</th>
-            <th className="p-3 border-b">Registration Date</th>
-            <th className="p-3 border-b">Actions</th>
+          <tr className="bg-[#e99dad]">
+            <th className="p-3 border-b text-left">Name</th>
+            <th className="p-3 border-b text-left">Contact</th>
+            <th className="p-3 border-b text-left">Registration Date</th>
+            <th className="p-3 border-b text-left">Location</th>
+            <th className="p-3 border-b text-left">Gender</th>
+            <th className="p-3 border-b text-left">Status</th>
+            <th className="p-3 border-b text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {users.map(user => (
-            <tr key={user.id}>
+          {users.map((user) => (
+            <tr key={user.id} className="hover:bg-[#ece0f2]">
               <td className="p-3 border-b">{user.name}</td>
               <td className="p-3 border-b">{user.contact}</td>
               <td className="p-3 border-b">{user.date}</td>
+              <td className="p-3 border-b">{user.location}</td>
+              <td className="p-3 border-b">{user.gender}</td>
               <td className="p-3 border-b">
-                <button
-                  className="bg-yellow-500 text-white px-3 py-1 rounded-md mr-2"
-                  onClick={handleEdit}
+                <span
+                  className={`px-2 py-1 rounded ${
+                    user.status === "active" ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"
+                  }`}
                 >
-                  Edit
-                </button>
-                <button
-                  className="bg-red-500 text-white px-3 py-1 rounded-md mr-2"
-                  onClick={() => alert('Delete user functionality')}
-                >
-                  Delete
-                </button>
-                <button
-                  className={`px-3 py-1 rounded-md ${user.status === 'active' ? 'bg-green-500' : 'bg-gray-500'} text-white`}
-                  onClick={() => handleStatusToggle(user.id)}
-                >
-                  {user.status === 'active' ? 'Deactivate' : 'Activate'}
-                </button>
+                  {user.status === "active" ? "Active" : "Suspended"}
+                </span>
+              </td>
+              <td className="p-3 border-b">
+                <div className="flex items-center gap-2">
+                  {/* Preview Button */}
+                  <button
+                    className="bg-yellow-500 text-white px-2 py-1 rounded-md"
+                    onClick={handlePreview}
+                  >
+                    <MdPreview className="inline-block" />
+                  </button>
+
+                  {/* Delete Button */}
+                  <button
+                    className="bg-red-500 text-white px-2 py-1 rounded-md"
+                    onClick={() => alert("Delete user functionality")}
+                  >
+                    <FaTrashAlt className="inline-block" />
+                  </button>
+
+                  {/* Status Toggle Button */}
+                  <button
+                    className={`px-3 py-1 rounded-md ${
+                      user.status === "active" ? "bg-gray-500" : "bg-green-500"
+                    } text-white`}
+                    onClick={() => handleStatusToggle(user.id)}
+                  >
+                    {user.status === "active" ? (
+                      <>
+                        <FaPowerOff className="inline-block" /> Suspend
+                      </>
+                    ) : (
+                      <>
+                        <FaCheckCircle className="inline-block mr-2" /> Activate
+                      </>
+                    )}
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

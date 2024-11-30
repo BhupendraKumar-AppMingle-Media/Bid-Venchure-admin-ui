@@ -3,8 +3,10 @@ import Login from "./components/Login/Login.jsx";
 
 // user management
 import UserManagement from "./components/UserManagement/UserManagement.jsx";
+import PreviewUserManagement from "./components/UserManagement/PreviewUserManagement.jsx";
 //Restaurant Management
 import RestaurantManagement from "./components/RestaurantManagement/RestaurantManagement.jsx";
+import PreviewRestaurantManagement from "./components/RestaurantManagement/PreviewRestaurantManagement.jsx";
 
 
 //event managemnt
@@ -15,7 +17,8 @@ import BiddingManagement from "./components/BiddingManagement/BiddingManagement.
 //EarningReport
 import EarningReport from "./components/EarningReport.jsx";
 //ReferralManagement
-import ReferalManagement from "./components/ReferalManagement/ReferalManagement.jsx";
+import ReferralManagement from "./components/ReferralManagement/ReferralManagement.jsx";
+import WalletIncentive from "./components/WalletIncentive/WalletIncentive.jsx";
 
 
 
@@ -27,10 +30,14 @@ import FlagReview from "./components/Review Management/FlagReview.jsx";
 import Reviews from "./components/Review Management/Reviews.jsx";
 
 // push-notification-management
-import AddNotification from "./components/PushNotification/AddNotifications.jsx";
-import EditNotifications from "./components/PushNotification/EditNotifications.jsx";
-import PushNotifications from "./components/PushNotification/PushNotifications.jsx";
-import ViewNotification from "./components/PushNotification/ViewNotification.jsx";
+import RestaurantsNotification from "./components/PushNotification/RestaurantsNotification.jsx";
+import UserNotification from "./components/PushNotification/UserNotification.jsx";
+
+import AddUserNotification from "./components/PushNotification/AddUserNotification.jsx";
+import EditUserNotification from "./components/PushNotification/EditUserNotification.jsx";
+import AddRestaurantNotification from "./components/PushNotification/AddRestaurantNotification";
+import EditRestaurantNotification from "./components/PushNotification/EditRestaurantNotification";
+
 
 
 import CommonLayout from "./common/CommonLayout.jsx";
@@ -47,7 +54,7 @@ import ViewReview from "./components/Review Management/ViewReview.jsx";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.jsx";
 
 // settings
-import Settings from "./components/Settings.jsx";
+import Settings from "./components/SliderPromotion.jsx";
 
 const App = () => {
   return (
@@ -68,11 +75,16 @@ const App = () => {
 
 
           <Route path="/users-management" element={<UserManagement/>}/>
+          <Route path="/preview-user-management" element={<PreviewUserManagement/>}/>
+          {/* restauranatt */}
+          <Route path="/restaurant-Management" element={<RestaurantManagement/>}/>
+          <Route path="/preview-restaurant-Management" element={<PreviewRestaurantManagement/>}/>
+
           <Route path="/events-management" element={<EventsManagement/>}/>
           <Route path="/bidding-management" element={<BiddingManagement/>}/>
           <Route path="/earning-report" element={<EarningReport/>}/>
-          <Route path="/referal-management" element={<ReferalManagement/>}/>
-          <Route path="/restaurant-Management" element={<RestaurantManagement/>}/>
+          <Route path="/wallet-incentive" element={<WalletIncentive/>}/>
+          <Route path="/referral-management" element={<ReferralManagement/>}/>
 
           
 
@@ -88,23 +100,23 @@ const App = () => {
 
 
           <Route path="/analytics" element={<Analytics />} />
-          <Route path="/settings" element={<Settings />} />
-          {/* push-notification */}
-          <Route path="/push-notifications" element={<PushNotifications />} />
-          <Route path="/add-push-notifications" element={<AddNotification />} />
-          <Route
-            path="/view-push-notifications"
-            element={<ViewNotification />}
-          />
-          <Route
-            path="/edit-push-notification"
-            element={<EditNotifications />}
-          />
+          <Route path="/slider-promotion" element={<Settings />} />
 
+          {/* push-notification */}
+          <Route path="/notifications/restaurants" element={<RestaurantsNotification />} />
+          <Route path="/notifications/users" element={<UserNotification />} />
+
+          <Route path="/add-user-notification" element={<AddUserNotification />} />
+          <Route path="/edit-user-notification/:id" element={<EditUserNotification />} />
+         
+          <Route path="/add-restaurant-notification" element={<AddRestaurantNotification />} />
+        <Route path="/edit-restaurant-notification/:id" element={<EditRestaurantNotification />} />
+     
          
 
 
           {/* profile */}
+
           <Route path="/profile" element={<Profile />} />
 
           <Route path="/profile-details" element={<ProfileDetails />} />

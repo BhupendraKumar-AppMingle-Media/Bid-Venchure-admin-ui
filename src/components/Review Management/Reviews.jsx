@@ -58,20 +58,23 @@ const Reviews = () => {
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Reviews Moderation</h1>
-        <p className="text-sm text-gray-500">
+        {/* <h1 className="text-2xl font-bold text-gray-800">Reviews Moderation</h1> */}
+        <h1 className="text-4xl font-bold text-center ">
+        Reviews Moderation
+        </h1>
+        <p className="text-sm text-center ">
           Manage and moderate user reviews for restaurants and events.
         </p>
       </div>
 
       {/* Reviews Table */}
       <div className="bg-white shadow rounded-lg">
-        <div className="p-4 border-b">
+        {/* <div className="p-4 border-b">
           <h2 className="text-lg font-semibold text-gray-700">All Reviews</h2>
-        </div>
+        </div> */}
         <table className="w-full table-auto border-collapse">
           <thead>
-            <tr className="bg-gray-50 text-left text-sm text-gray-600">
+            <tr className=" text-left text-sm bg-[#e99dad]">
               <th className="p-4 border">User</th>
               <th className="p-4 border">Restaurant</th>
               <th className="p-4 border">Event</th>
@@ -83,7 +86,7 @@ const Reviews = () => {
           </thead>
           <tbody>
             {reviews.map((review) => (
-              <tr key={review.id} className="text-sm text-gray-700">
+              <tr key={review.id} className="text-sm hover:bg-[#ece0f2]">
                 <td className="p-4 border">{review.user}</td>
                 <td className="p-4 border">{review.restaurant}</td>
                 <td className="p-4 border">{review.event}</td>

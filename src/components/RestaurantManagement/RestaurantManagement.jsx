@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RestaurantManagement = () => {
+  
+  const navigate = useNavigate();
+
   const [restaurants, setRestaurants] = useState([
     {
       id: 1,
@@ -11,7 +15,6 @@ const RestaurantManagement = () => {
       rating: 4.5,
       profileCompletion: 90,
       status: "Pending",
-      isFeatured: false,
     },
     {
       id: 2,
@@ -22,7 +25,6 @@ const RestaurantManagement = () => {
       rating: 4.8,
       profileCompletion: 95,
       status: "Active",
-      isFeatured: true,
     },
     {
       id: 3,
@@ -33,11 +35,11 @@ const RestaurantManagement = () => {
       rating: 4.0,
       profileCompletion: 80,
       status: "Suspended",
-      isFeatured: false,
     },
   ]);
 
-  const handleApprove = (id) => {
+  // Handle "Active" status
+  const handleActive = (id) => {
     setRestaurants(
       restaurants.map((restaurant) =>
         restaurant.id === id ? { ...restaurant, status: "Active" } : restaurant
@@ -45,10 +47,7 @@ const RestaurantManagement = () => {
     );
   };
 
-  const handleReject = (id) => {
-    setRestaurants(restaurants.filter((restaurant) => restaurant.id !== id));
-  };
-
+  // Handle "Suspend" status
   const handleSuspend = (id) => {
     setRestaurants(
       restaurants.map((restaurant) =>
@@ -57,30 +56,32 @@ const RestaurantManagement = () => {
     );
   };
 
-  const handleFeature = (id) => {
-    setRestaurants(
-      restaurants.map((restaurant) =>
-        restaurant.id === id ? { ...restaurant, isFeatured: !restaurant.isFeatured } : restaurant
-      )
-    );
+  // Handle "Delete" action
+  const handleDelete = (id) => {
+    setRestaurants(restaurants.filter((restaurant) => restaurant.id !== id));
+  };
+
+  // Handle "Preview" action (replace with navigation or modal)
+  const handlePreview = (id) => {
+    // alert(`Previewing restaurant with ID: ${id}`);
+    navigate("/preview-restaurant-Management");
   };
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Restaurant Management</h1>
-        <p className="text-sm text-gray-500">Manage and analyze restaurant registrations and profiles.</p>
+      <div className="mb-6 text-center">
+        <h1 className="text-4xl font-bold">Restaurant Management</h1>
+        <p className="text-sm text-gray-600">
+          Manage and analyze restaurant registrations and profiles.
+        </p>
       </div>
 
       {/* Restaurants Table */}
       <div className="bg-white shadow rounded-lg">
-        <div className="p-4 border-b">
-          <h2 className="text-lg font-semibold text-gray-700">Restaurants</h2>
-        </div>
         <table className="w-full table-auto border-collapse">
           <thead>
-            <tr className="bg-gray-50 text-left text-sm text-gray-600">
+            <tr className="text-left text-sm bg-gray-200">
               <th className="p-4 border">Name</th>
               <th className="p-4 border">Location</th>
               <th className="p-4 border">Cuisines</th>
@@ -93,7 +94,7 @@ const RestaurantManagement = () => {
           </thead>
           <tbody>
             {restaurants.map((restaurant) => (
-              <tr key={restaurant.id} className="text-sm text-gray-700">
+              <tr key={restaurant.id} className="text-sm hover:bg-gray-100">
                 <td className="p-4 border">{restaurant.name}</td>
                 <td className="p-4 border">{restaurant.location}</td>
                 <td className="p-4 border">{restaurant.cuisines.join(", ")}</td>
@@ -125,24 +126,19 @@ const RestaurantManagement = () => {
                     {restaurant.status}
                   </span>
                 </td>
-                <td className="p-4 border flex flex-wrap gap-2">
-                  {restaurant.status === "Pending" && (
-                    <>
-                      <button
-                        className="px-3 py-1 text-sm text-white bg-green-500 rounded hover:bg-green-600"
-                        onClick={() => handleApprove(restaurant.id)}
-                      >
-                        Approve
-                      </button>
-                      <button
-                        className="px-3 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600"
-                        onClick={() => handleReject(restaurant.id)}
-                      >
-                        Reject
-                      </button>
-                    </>
+                <td className="p-4 border flex gap-2">
+                  {/* Active Button */}
+                  {restaurant.status !== "Active" && (
+                    <button
+                      className="px-3 py-1 text-sm text-white bg-green-500 rounded hover:bg-green-600"
+                      onClick={() => handleActive(restaurant.id)}
+                    >
+                      Active
+                    </button>
                   )}
-                  {restaurant.status === "Active" && (
+
+                  {/* Suspend Button */}
+                  {restaurant.status !== "Suspended" && (
                     <button
                       className="px-3 py-1 text-sm text-white bg-yellow-500 rounded hover:bg-yellow-600"
                       onClick={() => handleSuspend(restaurant.id)}
@@ -150,15 +146,21 @@ const RestaurantManagement = () => {
                       Suspend
                     </button>
                   )}
+
+                  {/* Delete Button */}
                   <button
-                    className={`px-3 py-1 text-sm text-white rounded ${
-                      restaurant.isFeatured
-                        ? "bg-blue-500 hover:bg-blue-600"
-                        : "bg-gray-500 hover:bg-gray-600"
-                    }`}
-                    onClick={() => handleFeature(restaurant.id)}
+                    className="px-3 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600"
+                    onClick={() => handleDelete(restaurant.id)}
                   >
-                    {restaurant.isFeatured ? "Remove Badge" : "Add Badge"}
+                    Delete
+                  </button>
+
+                  {/* Preview Button */}
+                  <button
+                    className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
+                    onClick={() => handlePreview(restaurant.id)}
+                  >
+                    Preview
                   </button>
                 </td>
               </tr>

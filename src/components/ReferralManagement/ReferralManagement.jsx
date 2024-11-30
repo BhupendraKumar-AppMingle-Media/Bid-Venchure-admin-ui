@@ -1,12 +1,12 @@
 import React from "react";
 import { FaUserTie, FaDollarSign, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
-const ReferalManagement = () => {
+const ReferralManagement = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       {/* Header */}
       <header className="mb-8 text-center">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold ">
           Referral Management
         </h1>
         <p className="text-gray-600 mt-2">Manage referral partners, track progress, and approve/reject restaurants.</p>
@@ -57,7 +57,7 @@ const ReferalManagement = () => {
         <div className="bg-white shadow-lg rounded-lg p-6">
           <table className="w-full table-auto">
             <thead>
-              <tr className="bg-gray-200 text-gray-700">
+              <tr className=" bg-[#e99dad]">
                 <th className="p-3 text-left">Restaurant Name</th>
                 <th className="p-3 text-left">Partner Name</th>
                 <th className="p-3 text-left">Status</th>
@@ -66,7 +66,7 @@ const ReferalManagement = () => {
             </thead>
             <tbody>
               {/* Row 1 */}
-              <tr className="border-b hover:bg-gray-50">
+              <tr className="border-b hover:bg-[#ece0f2]">
                 <td className="p-3">Pizza Paradise</td>
                 <td className="p-3">John Doe</td>
                 <td className="p-3 text-green-500 font-bold">Pending</td>
@@ -83,7 +83,7 @@ const ReferalManagement = () => {
               </tr>
 
               {/* Row 2 */}
-              <tr className="border-b hover:bg-gray-50">
+              <tr className="border-b hover:bg-[#ece0f2]">
                 <td className="p-3">Burger Heaven</td>
                 <td className="p-3">Jane Smith</td>
                 <td className="p-3 text-green-500 font-bold">Pending</td>
@@ -100,7 +100,7 @@ const ReferalManagement = () => {
               </tr>
 
               {/* Row 3 */}
-              <tr className="hover:bg-gray-50">
+              <tr className="hover:bg-[#ece0f2]">
                 <td className="p-3">Taco Fiesta</td>
                 <td className="p-3">Emily Carter</td>
                 <td className="p-3 text-green-500 font-bold">Pending</td>
@@ -123,4 +123,4 @@ const ReferalManagement = () => {
   );
 };
 
-export default ReferalManagement;
+export default ReferralManagement;

@@ -6,7 +6,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-100 p-6">
       {/* Header Section */}
       <header className="mb-8 text-center">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 bg-clip-text text-transparent animate-text">
+        <h1 className="text-4xl font-bold text-center bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 bg-clip-text text-transparent animate-text">
           Admin Dashboard
         </h1>
         <p className="text-gray-600 mt-2">An overview of platform activity and insights.</p>

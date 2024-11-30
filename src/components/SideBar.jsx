@@ -1,226 +1,138 @@
 import { useState } from "react";
 import { AiOutlineAreaChart } from "react-icons/ai";
-import { FaMoneyBillWave, FaUserCircle } from "react-icons/fa";
-import { FaCartShopping, FaUsers } from "react-icons/fa6";
-// import { GrProductHunt } from "react-icons/gr";
-// import { HiMiniCurrencyRupee } from "react-icons/hi2";
-import { IoMdSettings } from "react-icons/io";
-import { IoNotificationsSharp } from "react-icons/io5";
-import { IoMdArrowDropdown } from "react-icons/io";
-// import { MdNotificationsOff } from "react-icons/md";
 import {
-  MdDashboard,
-  // MdOutlineSupportAgent,
-  MdRateReview,
-} from "react-icons/md";
+  FaUserFriends,
+  FaRegCalendarAlt,
+  FaGavel,
+  FaUtensils,
+  FaUserCircle,
+} from "react-icons/fa";
+import { IoNotificationsSharp } from "react-icons/io5";
+import { MdDashboard, MdRateReview, MdAttachMoney } from "react-icons/md";
 import { RiCouponFill, RiLogoutBoxFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import { FaWallet } from "react-icons/fa";
+import { FaImage } from "react-icons/fa6";
 
 import "./SideBar.css";
+
 const SideBar = () => {
   const navigate = useNavigate();
-  const [isProductsDropdownOpen, setProductsDropdownOpen] = useState(false);
-  const [isDeliveryDropdownOpen, setDeliveryDropdownOpen] = useState(false);
-  const [isCustomersDropdownOpen, setCustomersDropdownOpen] = useState(false); // State for Customers Management dropdown
+  const [activeIndex, setActiveIndex] = useState(0); // Track the active item index
+  const [dropdownOpen, setDropdownOpen] = useState({
+    notifications: false,
+  }); // Track dropdowns (only for notifications)
 
   const sideBarDatas = [
+    { icon: <MdDashboard />, title: "Dashboard", link: "/" },
+    { icon: <FaUserFriends />, title: "Users Management", link: "/users-management" },
+    { icon: <FaUtensils />, title: "Restaurant Management", link: "/restaurant-management" },
+    { icon: <FaRegCalendarAlt />, title: "Events Management", link: "/events-management" },
+    { icon: <FaGavel />, title: "Bidding Management", link: "/bidding-management" },
+    { icon: <MdRateReview />, title: "Reviews And Rating", link: "/reviews" },
+    { icon: <AiOutlineAreaChart />, title: "Analytics", link: "/analytics" },
+    { icon: <MdAttachMoney />, title: "Earning Report", link: "/earning-report" },
+    { icon: <FaWallet />, title: "Wallet and Incentive", link: "/wallet-incentive" },
+    { icon: <RiCouponFill />, title: "Referral Management", link: "/referral-management" },
     {
-      icon: <MdDashboard style={{ fontSize: "1.25rem" , color: "#EF8120"}} />,
-      title: "Dashboard",
-      link: "/",
+      icon: <IoNotificationsSharp />,
+      title: "Notification And Alert",
+      dropdownKey: "notifications",
+      dropdownItems: [
+        { title: "User Notifications", link: "/notifications/users" },
+        { title: "Restaurant Notifications", link: "/notifications/restaurants" },
+      ],
     },
-    // {
-    //   icon: <GrProductHunt style={{ fontSize: "1.25rem" , color: "#EF8120"}} />,
-    //   title: "Products Management",
-    //   link: "/products",
-    //   dropdown: [
-    //     { title: "Add Products", link: "/add-product" },
-    //     { title: "All Product", link: "/products-list" },
-    //     { title: "Categories", link: "/categories" },
-    //     { title: "Inventory", link: "/product-inventory" },
-    //   ],
-    //},
-    {
-      icon: <FaCartShopping style={{ fontSize: "1.25rem" , color: "#EF8120" }} />,
-      title: "Users Management",
-      link: "/users-management",
-    },
-    {
-      icon: <FaCartShopping style={{ fontSize: "1.25rem" , color: "#EF8120" }} />,
-      title: "Events Management",
-      link: "/events-management",
-    },
-    {
-      icon: <FaCartShopping style={{ fontSize: "1.25rem" , color: "#EF8120" }} />,
-      title: "Bidding Management",
-      link: "/bidding-management",
-    },
-   
-    {
-      icon: <FaCartShopping style={{ fontSize: "1.25rem" , color: "#EF8120" }} />,
-      title: "Restaurant Management",
-      link: "/restaurant-management",
-    },
-   
-    {
-      icon: <MdRateReview style={{ fontSize: "1.25rem" , color: "#EF8120"}} />,
-      title: "Reviews And Rating",
-      link: "/reviews",
-    },
-    
-    {
-      icon: <AiOutlineAreaChart style={{ fontSize: "1.25rem" , color: "#EF8120"}} />,
-      title: "Analytics",
-      link: "/analytics",
-    },
-    {
-      icon: <IoNotificationsSharp style={{ fontSize: "1.25rem" , color: "#EF8120"}} />,
-      title: " Notification And Alert",
-      link: "/push-notifications",
-    },
-    
-    {
-      icon: <FaMoneyBillWave style={{ fontSize: "1.25rem" , color: "#EF8120"}} />,
-      title: "Earning Report",
-      link: "/earning-report",
-    },
-    
-    {
-      icon: <RiCouponFill style={{ fontSize: "1.25rem" , color: "#EF8120"}} />,
-      title: "Referal Management",
-      link: "/referal-management",
-    },
-   
-    {
-      icon: <IoMdSettings style={{ fontSize: "1.25rem" , color: "#EF8120"}} />,
-      title: "Slider and Promotion",
-      link: "/settings",
-    },
-    {
-      icon: <FaUserCircle style={{ fontSize: "1.25rem" , color: "#EF8120"}} />,
-      title: "Profile",
-      link: "/profile",
-    },
-    {
-      icon: <RiLogoutBoxFill style={{ fontSize: "1.25rem" , color: "#EF8120"}} />,
-      title: "Login",
-      link: "/login",
-    },
+    { icon: <FaImage />, title: "Slider and Promotion", link: "/slider-promotion" },
+    { icon: <FaUserCircle />, title: "Profile", link: "/profile" },
+    { icon: <RiLogoutBoxFill />, title: "Logout", link: "/logout" },
   ];
 
-  const handleProductsDropdownToggle = () => {
-    setProductsDropdownOpen(!isProductsDropdownOpen);
+  const handleNavigation = (link, idx) => {
+    setActiveIndex(idx); // Set the clicked item as active
+    navigate(link); // Navigate to the clicked item's route
   };
 
-  const handleDeliveryDropdownToggle = () => {
-    setDeliveryDropdownOpen(!isDeliveryDropdownOpen);
-  };
-
-  const handleCustomersDropdownToggle = () => {
-    setCustomersDropdownOpen(!isCustomersDropdownOpen);
+  const toggleDropdown = (key) => {
+    setDropdownOpen((prevState) => ({
+      ...prevState,
+      [key]: !prevState[key],
+    }));
   };
 
   return (
-    <div className="w-61 h-[calc(100vh-84px)] bg-[#81687b]  shadow-lg fixed top-[84px] left-0 overflow-y-auto custom-scrollbar"
-    style={{ color: "#ffffff" }}>
-      <section className="w-61 h-full">
-        <ul className="rounded-xl flex flex-col">
+    <div className="w-64 h-[calc(100vh-84px)] bg-[#81687b] shadow-lg fixed top-[84px] left-0 overflow-y-auto custom-scrollbar">
+      <section className="w-64 h-full">
+        <ul className="rounded-xl flex flex-col mt-4">
           {sideBarDatas.map((sideBarData, idx) => (
-            <li key={idx}>
-              {sideBarData.title === "Products Management" ? (
+            <li key={idx} className="relative group">
+              {/* If the item has a dropdown */}
+              {sideBarData.dropdownKey ? (
                 <>
                   <div
-                    className="w-full p-4 hover:bg-[#86C3D7] hover:shadow-xl flex justify-start items-center gap-2 text-[#ffffff] cursor-pointer"
-                    onClick={handleProductsDropdownToggle}
+                    className={`w-full p-4 flex justify-between items-center gap-4 text-[#ffffff] cursor-pointer transition-all duration-300 rounded-md ${
+                      dropdownOpen[sideBarData.dropdownKey]
+                        ? "bg-[#e17288] text-white shadow-md"
+                        : "hover:bg-[#f1a8db] hover:shadow-lg"
+                    }`}
+                    onClick={() => toggleDropdown(sideBarData.dropdownKey)}
                   >
-                    <span>{sideBarData.icon}</span>
-                    <span className="text-base">{sideBarData.title}</span>
-
-
-
-                    <span className="ml-auto">
-
-
-                                          
-                    {isProductsDropdownOpen ? (
-                      <IoMdArrowDropdown
-                        style={{ transform: "rotate(180deg)" }}
-                      />
-                    ) : (
-                      <IoMdArrowDropdown />
-                    )}
-
-                </span> 
-
-
+                    <div className="flex items-center gap-4">
+                      <span
+                        style={{
+                          fontSize: "1.5rem",
+                          color: dropdownOpen[sideBarData.dropdownKey] ? "white" : "#D2405D",
+                        }}
+                      >
+                        {sideBarData.icon}
+                      </span>
+                      <span className="text-base font-medium">{sideBarData.title}</span>
+                    </div>
+                    <span className="text-lg font-bold">
+                      {dropdownOpen[sideBarData.dropdownKey] ? "-" : "+"}
+                    </span>
                   </div>
-                  {isProductsDropdownOpen && (
-                    <ul className="ml-1 mt-2">
-                      {sideBarData.dropdown.map((item, i) => (
-                        <li
-                          key={i}
-                          className="pl-5 p-2 m-2 bg-[#fad9bd] text-black hover:bg-[#86C3D7] rounded-lg cursor-pointer"
-                          onClick={() => navigate(item.link)}
-                        >
-                          {item.title}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </>
-              ) : sideBarData.title === "Delivery Management" ? (
-                <>
-                  <div
-                    className="w-full p-4 hover:bg-[#86C3D7] hover:shadow-xl flex justify-start items-center gap-2 text-blue-950 cursor-pointer"
-                    onClick={handleDeliveryDropdownToggle}
-                  >
-                    <span>{sideBarData.icon}</span>
-                    <span className="text-base">{sideBarData.title}</span>
-                  </div>
-                  {isDeliveryDropdownOpen && (
-                    <ul className="ml-1 mt-2">
-                      {sideBarData.dropdown.map((item, i) => (
-                        <li
-                          key={i}
-                          className="pl-5 p-2 m-2 bg-[#fad9bd] text-black hover:bg-[#86C3D7] rounded-lg cursor-pointer"
-                          onClick={() => navigate(item.link)}
-                        >
-                          {item.title}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </>
-              ) : sideBarData.title === "Customers Management" ? (
-                <>
-                  <div
-                    className="w-full p-4 hover:bg-[#86C3D7] hover:shadow-xl flex justify-start items-center gap-4 text-blue-950 cursor-pointer"
-                    onClick={handleCustomersDropdownToggle}
-                  >
-                    <span>{sideBarData.icon}</span>
-                    <span className="text-base">{sideBarData.title}</span>
-                  </div>
-                  {isCustomersDropdownOpen && (
-                    <ul className="ml-1 mt-2">
-                      {sideBarData.dropdown.map((item, i) => (
-                        <li
-                          key={i}
-                          className="pl-5 p-2 m-2 bg-[#fad9bd] text-black hover:bg-[#86C3D7] rounded-lg cursor-pointer"
-                          onClick={() => navigate(item.link)}
-                        >
-                          {item.title}
+
+                  {/* Dropdown Items */}
+                  {dropdownOpen[sideBarData.dropdownKey] && (
+                    <ul className="ml-6 mt-2">
+                      {sideBarData.dropdownItems.map((item, subIdx) => (
+                        <li key={subIdx}>
+                          <div
+                            className="p-2 text-[#ffffff] cursor-pointer hover:bg-[#f1a8db] hover:shadow-lg rounded-md"
+                            onClick={() => handleNavigation(item.link, idx)}
+                          >
+                            {item.title}
+                          </div>
                         </li>
                       ))}
                     </ul>
                   )}
                 </>
               ) : (
+                // Regular Sidebar Items
                 <div
-                  className="w-full p-4 hover:bg-[#86C3D7] hover:shadow-xl flex justify-start items-center gap-2 text-blue-950 cursor-pointer"
-                  onClick={() => navigate(sideBarData.link)}
+                  className={`w-full p-4 flex justify-start items-center gap-4 text-[#ffffff] cursor-pointer transition-all duration-300 rounded-md ${
+                    activeIndex === idx
+                      ? "bg-[#D2405D] text-white shadow-md"
+                      : "hover:bg-[#f1a8db] hover:shadow-lg"
+                  }`}
+                  onClick={() => handleNavigation(sideBarData.link, idx)}
                 >
-                  <span>{sideBarData.icon}</span>
-                  <span className="text-base">{sideBarData.title}</span>
+                  <div
+                    className={`absolute left-0 top-0 h-full w-1 rounded-md transition-all ${
+                      activeIndex === idx ? "bg-white" : "bg-transparent group-hover:bg-[#D2405D]"
+                    }`}
+                  ></div>
+                  <span
+                    style={{
+                      fontSize: "1.5rem",
+                      color: activeIndex === idx ? "white" : "#D2405D",
+                    }}
+                  >
+                    {sideBarData.icon}
+                  </span>
+                  <span className="text-base font-medium">{sideBarData.title}</span>
                 </div>
               )}
             </li>
