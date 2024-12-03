@@ -13,6 +13,7 @@ import PreviewRestaurantManagement from "./components/RestaurantManagement/Previ
 import EventsManagement from "./components/EventManagement/EventManagement.jsx";
 //bidding management
 import BiddingManagement from "./components/BiddingManagement/BiddingManagement.jsx";
+import PreviewBidding from "./components/BiddingManagement/PreviewBidding.jsx";
 
 //EarningReport
 import EarningReport from "./components/EarningReport.jsx";
@@ -82,6 +83,7 @@ const App = () => {
 
           <Route path="/events-management" element={<EventsManagement/>}/>
           <Route path="/bidding-management" element={<BiddingManagement/>}/>
+          <Route path="/preview-bidding-management/:id" element={<PreviewBidding/>}/>
           <Route path="/earning-report" element={<EarningReport/>}/>
           <Route path="/wallet-incentive" element={<WalletIncentive/>}/>
           <Route path="/referral-management" element={<ReferralManagement/>}/>

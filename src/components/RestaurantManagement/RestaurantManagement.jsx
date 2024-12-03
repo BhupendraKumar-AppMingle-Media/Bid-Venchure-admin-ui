@@ -85,7 +85,7 @@ const RestaurantManagement = () => {
               <th className="p-4 border">Name</th>
               <th className="p-4 border">Location</th>
               <th className="p-4 border">Cuisines</th>
-              <th className="p-4 border">Events</th>
+              <th className="p-4 border">Total Events</th>
               <th className="p-4 border">Rating</th>
               <th className="p-4 border">Profile %</th>
               <th className="p-4 border">Status</th>

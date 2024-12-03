@@ -71,7 +71,7 @@ const UserManagement = () => {
           <tr className="bg-[#e99dad]">
             <th className="p-3 border-b text-left">Name</th>
             <th className="p-3 border-b text-left">Contact</th>
-            <th className="p-3 border-b text-left">Registration Date</th>
+            {/* <th className="p-3 border-b text-left">Registration Date</th> */}
             <th className="p-3 border-b text-left">Location</th>
             <th className="p-3 border-b text-left">Gender</th>
             <th className="p-3 border-b text-left">Status</th>
@@ -83,7 +83,7 @@ const UserManagement = () => {
             <tr key={user.id} className="hover:bg-[#ece0f2]">
               <td className="p-3 border-b">{user.name}</td>
               <td className="p-3 border-b">{user.contact}</td>
-              <td className="p-3 border-b">{user.date}</td>
+              {/* <td className="p-3 border-b">{user.date}</td> */}
               <td className="p-3 border-b">{user.location}</td>
               <td className="p-3 border-b">{user.gender}</td>
               <td className="p-3 border-b">
