@@ -1,255 +1,116 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import AddEventForm from './AddEventForm';
+import EditEventForm from './EditEventForm';
 
-// Sample events for demonstration
-const sampleEvents = [
-  {
-    id: 1,
-    type: "Wedding",
-    date: "2024-12-20",
-    time: "18:00",
-    guestDetails: { adults: 100, kids: 10 },
-    budget: 50000,
-    status: "active",
-    specialNotes: "Requires vegetarian options.",
-  },
-  {
-    id: 2,
-    type: "Birthday Party",
-    date: "2024-11-30",
-    time: "14:00",
-    guestDetails: { adults: 50, kids: 20 },
-    budget: 20000,
-    status: "pending",
-    specialNotes: "Outdoor event, needs tent.",
-  },
-];
+const EventManagement = () => {
+  const [events, setEvents] = useState([]);
+  const [editEvent, setEditEvent] = useState(null);
+  const [isAddFormOpen, setIsAddFormOpen] = useState(false); // State to control form visibility
 
-function EventManagement() {
-  const [events, setEvents] = useState(sampleEvents);
-  const [showForm, setShowForm] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingEvent, setEditingEvent] = useState(null);
-
-  const [newEvent, setNewEvent] = useState({
-    type: "Birthday Party",
-    customType: "",
-    date: "",
-    time: "",
-    guestDetails: { adults: "", kids: "" },
-    budget: "",
-    preference: "veg",
-    specialNotes: "",
-  });
-
-  // Handle form input change
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "adults" || name === "kids") {
-      setNewEvent((prev) => ({
-        ...prev,
-        guestDetails: { ...prev.guestDetails, [name]: value },
-      }));
-    } else {
-      setNewEvent((prev) => ({ ...prev, [name]: value }));
-    }
+  // Add Event
+  const addEvent = (newEvent) => {
+    setEvents([...events, { ...newEvent, id: Date.now() }]);
+    setIsAddFormOpen(false); // Close the form after adding
   };
 
-  // Handle adding a new event
-  const handleAddEvent = (e) => {
-    e.preventDefault();
-    const eventToAdd = {
-      ...newEvent,
-      type: newEvent.type === "Other" ? newEvent.customType : newEvent.type,
-      id: events.length + 1,
-      status: "pending",
-    };
-    setEvents([...events, eventToAdd]);
-    setShowForm(false);
-    resetForm();
+  // Delete Event
+  const deleteEvent = (id) => {
+    setEvents(events.filter((event) => event.id !== id));
   };
 
-  // Handle delete event
-  const handleDeleteEvent = (eventId) => {
-    setEvents(events.filter((event) => event.id !== eventId));
+  // Edit Event
+  const handleEdit = (id) => {
+    const eventToEdit = events.find((event) => event.id === id);
+    setEditEvent(eventToEdit);
   };
 
-  // Handle edit event
-  const handleEditEvent = (event) => {
-    setIsEditing(true);
-    setEditingEvent(event);
-    setNewEvent(event);
-    setShowForm(true);
-  };
-
-  // Handle update event
-  const handleUpdateEvent = (e) => {
-    e.preventDefault();
-    setEvents((prevEvents) =>
-      prevEvents.map((event) =>
-        event.id === editingEvent.id
-          ? { ...editingEvent, ...newEvent }
-          : event
-      )
+  const updateEvent = (updatedEvent) => {
+    setEvents(
+      events.map((event) => (event.id === updatedEvent.id ? updatedEvent : event))
     );
-    setIsEditing(false);
-    setShowForm(false);
-    resetForm();
-  };
-
-  // Handle status update
-  const handleStatusChange = (id, status) => {
-    setEvents((prevEvents) =>
-      prevEvents.map((event) =>
-        event.id === id ? { ...event, status } : event
-      )
-    );
-  };
-
-  // Reset form state
-  const resetForm = () => {
-    setNewEvent({
-      type: "Birthday Party",
-      customType: "",
-      date: "",
-      time: "",
-      guestDetails: { adults: "", kids: "" },
-      budget: "",
-      preference: "veg",
-      specialNotes: "",
-    });
+    setEditEvent(null);
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-4xl mb-4 font-bold text-center">Event Management</h1>
+    <div className="p-8 bg-gray-100 min-h-screen">
+       <h1 className="text-4xl font-bold text-center mb-4">Bidding Management</h1>
+      {/* Top Section */}
+      <div className="flex justify-between items-center mb-4">
+        {/* Back Button */}
+        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+          Back
+        </button>
 
-      {/* Add/Edit Event Button */}
-      <div className="mb-6">
+        {/* Add Event Button */}
         <button
-          onClick={() => {
-            setShowForm((prev) => !prev);
-            setIsEditing(false);
-            resetForm();
-          }}
-          className="bg-blue-500 text-white px-4 py-2 rounded shadow"
+          onClick={() => setIsAddFormOpen(!isAddFormOpen)}
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
         >
-          {showForm ? "Close Form" : isEditing ? "Edit Event" : "Add Event"}
+          + Add Event
         </button>
       </div>
 
-      {/* Add/Edit Event Form */}
-      {showForm && (
-        <form
-          onSubmit={isEditing ? handleUpdateEvent : handleAddEvent}
-          className="mb-6 bg-gray-100 p-6 rounded shadow"
-        >
-          <h2 className="text-2xl font-bold mb-4">
-            {isEditing ? "Edit Event" : "Add Event"}
-          </h2>
-
-          <div className="mb-4">
-            <label className="block font-medium mb-2">Event Type</label>
-            <select
-              name="type"
-              value={newEvent.type}
-              onChange={handleInputChange}
-              className="border px-3 py-2 rounded w-full"
-            >
-              <option>Birthday Party</option>
-              <option>Wedding</option>
-              <option>Anniversary</option>
-              <option>Corporate Event</option>
-              <option>Other</option>
-            </select>
-          </div>
-
-          {/* Conditionally render the custom input for "Other" */}
-          {newEvent.type === "Other" && (
-            <div className="mb-4">
-              <label className="block font-medium mb-2">Custom Event Name</label>
-              <input
-                type="text"
-                name="customType"
-                value={newEvent.customType}
-                onChange={handleInputChange}
-                className="border px-3 py-2 rounded w-full"
-                placeholder="Enter custom event name"
-                required
-              />
-            </div>
-          )}
-
-          <div className="mb-4">
-            <label className="block font-medium mb-2">Additional Details</label>
-            <textarea
-              name="specialNotes"
-              value={newEvent.specialNotes}
-              onChange={handleInputChange}
-              className="border px-3 py-2 rounded w-full"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="bg-green-500 text-white px-4 py-2 rounded shadow"
-          >
-            {isEditing ? "Update Event" : "Submit"}
-          </button>
-        </form>
-      )}
+      {/* Add or Edit Form */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {editEvent ? (
+          <EditEventForm
+            event={editEvent}
+            updateEvent={updateEvent}
+            cancelEdit={() => setEditEvent(null)}
+          />
+        ) : (
+          isAddFormOpen && <AddEventForm addEvent={addEvent} />
+        )}
+      </div>
 
       {/* Events Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
-          <thead>
-            <tr className="text-left bg-[#e99dad]">
-              <th className="px-6 py-2 border-b">Event Type</th>
-              <th className="px-4 py-2 border-b">Status</th>
-              <th className="px-4 py-2 border-b">Special Notes</th>
-              <th className="px-4 py-2 border-b">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map((event) => (
-              <tr key={event.id} className="hover:bg-[#ece0f2]">
-                <td className="px-4 py-2 border-b">{event.type}</td>
-                <td className="px-4 py-2 border-b">
-                  <select
-                    value={event.status}
-                    onChange={(e) =>
-                      handleStatusChange(event.id, e.target.value)
-                    }
-                    className="border px-2 py-1 rounded"
-                  >
-                    <option value="active">Active</option>
-                    <option value="pending">Pending</option>
-                    <option value="inactive">Inactive</option>
-                  </select>
-                </td>
-                <td className="px-4 py-2 border-b">{event.specialNotes}</td>
-
-                <td className="px-4 py-2 border-b flex gap-2">
-                  <button
-                    onClick={() => handleEditEvent(event)}
-                    className="bg-blue-500 text-white text-sm px-2 py-1 rounded"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteEvent(event.id)}
-                    className="bg-red-500 text-white text-sm px-2 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </td>
+      <div className="mt-8">
+        <h2 className="text-xl font-bold mb-4">Event List</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border border-gray-300 px-4 py-2 text-left">Event Type</th>
+                <th className="border border-gray-300 px-4 py-2 text-left">Description</th>
+                <th className="border border-gray-300 px-4 py-2 text-left">Image</th>
+                <th className="border border-gray-300 px-4 py-2 text-left">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {events.map((event) => (
+                <tr key={event.id} className="bg-white">
+                  <td className="border border-gray-300 px-4 py-2">{event.type}</td>
+                  <td className="border border-gray-300 px-4 py-2">{event.description}</td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    <img
+                      src={event.image}
+                      alt="Event"
+                      className="w-16 h-16 object-cover rounded"
+                    />
+                  </td>
+
+                  <td className="border border-gray-300 px-4 py-2">
+                    <button
+                      className="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 mr-2"
+                      onClick={() => handleEdit(event.id)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                      onClick={() => deleteEvent(event.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default EventManagement;

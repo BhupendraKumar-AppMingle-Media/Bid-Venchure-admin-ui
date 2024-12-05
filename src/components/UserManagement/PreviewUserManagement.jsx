@@ -97,7 +97,6 @@ const PreviewUserManagement = () => {
           <thead>
             <tr className="bg-gray-200">
               <th className="p-3 border border-gray-300 text-left">Restaurant Name</th>
-              <th className="p-3 border border-gray-300 text-left">Date/Time</th>
               <th className="p-3 border border-gray-300 text-left">Event Type</th>
               <th className="p-3 border border-gray-300 text-left">Amount</th>
               <th className="p-3 border border-gray-300 text-left">Location</th>
@@ -108,7 +107,6 @@ const PreviewUserManagement = () => {
             {restaurantBookings.map((booking) => (
               <tr key={booking.id} className="hover:bg-gray-100">
                 <td className="p-3 border border-gray-300">{booking.name}</td>
-                <td className="p-3 border border-gray-300">{booking.dateTime}</td>
                 <td className="p-3 border border-gray-300">{booking.eventType}</td>
                 <td className="p-3 border border-gray-300">{booking.amount}</td>
                 <td className="p-3 border border-gray-300">{booking.location}</td>

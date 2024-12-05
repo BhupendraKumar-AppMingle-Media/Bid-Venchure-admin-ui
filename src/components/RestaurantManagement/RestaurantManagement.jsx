@@ -160,7 +160,7 @@ const RestaurantManagement = () => {
                     className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
                     onClick={() => handlePreview(restaurant.id)}
                   >
-                    Preview
+                    Details
                   </button>
                 </td>
               </tr>

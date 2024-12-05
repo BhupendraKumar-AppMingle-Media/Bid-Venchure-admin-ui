@@ -1,52 +1,76 @@
 import React, { useState } from "react";
-import PreviewBidding from "./PreviewBidding";
 
 const BiddingManagement = () => {
-  const [bids, setBids] = useState([
+  const [bids] = useState([
     {
       id: 1,
       userName: "John Doe",
-      dateTime: "2024-12-03 10:30 AM",
-      typeOfEvent: "Birthday Party",
-      restaurant: "Tasty Bites",
-      bidAmount: 5000,
-      status: "Active",
+      contactInfo: "johndoe@example.com",
+      eventType: "Birthday Party",
+      noOfGuests: 50,
+      budget: 5000,
+      allBidRestaurants: [
+        { name: "Tasty Bites", offerAmount: 5000 },
+        { name: "Delicious Delights", offerAmount: 10000 },
+      ],
+      participatedRestaurants: [
+        { name: "Food Haven", offerAmount: 8000 },
+        { name: "Spicy Cravings", offerAmount: 7000 },
+      ],
+      acceptedByUser: [{ name: "Baked Goodness", offerAmount: 12000 }],
     },
     {
       id: 2,
       userName: "Jane Smith",
-      dateTime: "2024-12-02 5:00 PM",
-      typeOfEvent: "Wedding Reception",
-      restaurant: "Delicious Delights",
-      bidAmount: 15000,
-      status: "Inactive",
+      contactInfo: "janesmith@example.com",
+      eventType: "Wedding Reception",
+      noOfGuests: 100,
+      budget: 15000,
+      allBidRestaurants: [
+        { name: "Spicy Cravings", offerAmount: 7000 },
+        { name: "Tasty Bites", offerAmount: 5000 },
+      ],
+      participatedRestaurants: [
+        { name: "Delicious Delights", offerAmount: 10000 },
+        { name: "Baked Goodness", offerAmount: 12000 },
+      ],
+      acceptedByUser: [{ name: "Food Haven", offerAmount: 8000 }],
     },
     {
       id: 3,
       userName: "Mark Lee",
-      dateTime: "2024-12-01 2:00 PM",
-      typeOfEvent: "Corporate Event",
-      restaurant: "Food Haven",
-      bidAmount: 8000,
-      status: "Active",
+      contactInfo: "marklee@example.com",
+      eventType: "Corporate Event",
+      noOfGuests: 80,
+      budget: 8000,
+      allBidRestaurants: [
+        { name: "Food Haven", offerAmount: 8000 },
+        { name: "Delicious Delights", offerAmount: 10000 },
+      ],
+      participatedRestaurants: [
+        { name: "Tasty Bites", offerAmount: 5000 },
+        { name: "Baked Goodness", offerAmount: 12000 },
+      ],
+      acceptedByUser: [{ name: "Spicy Cravings", offerAmount: 7000 }],
     },
   ]);
 
-  const [selectedBid, setSelectedBid] = useState(null);
+  const [popupData, setPopupData] = useState(null); // To store popup data
+  const [popupTitle, setPopupTitle] = useState(""); // To store popup title
+  const [popupVisible, setPopupVisible] = useState(false); // To control popup visibility
 
-  // Handle bid removal
-  const handleDeleteBid = (id) => {
-    setBids(bids.filter((bid) => bid.id !== id));
+  // Function to open the popup
+  const openPopup = (data, title) => {
+    setPopupData(data);
+    setPopupTitle(title);
+    setPopupVisible(true);
   };
 
-  // Handle preview action
-  const handlePreview = (bid) => {
-    setSelectedBid(bid);
-  };
-
-  // Close the preview modal
-  const closePreview = () => {
-    setSelectedBid(null);
+  // Function to close the popup
+  const closePopup = () => {
+    setPopupData(null);
+    setPopupTitle("");
+    setPopupVisible(false);
   };
 
   return (
@@ -62,44 +86,64 @@ const BiddingManagement = () => {
         <table className="w-full table-auto border-collapse">
           <thead>
             <tr className="text-left text-sm bg-[#e99dad]">
-              <th className="p-4 border">User Name</th>
-              <th className="p-4 border">Date/Time</th>
-              <th className="p-4 border">Type of Event</th>
-              <th className="p-4 border">Bid Amount</th>
-              <th className="p-4 border">Status</th>
-              <th className="p-4 border">Actions</th>
+              <th className="p-4 border">Username</th>
+              <th className="p-4 border">Contact Info</th>
+              <th className="p-4 border">Event Type</th>
+              <th className="p-4 border">No of Guests</th>
+              <th className="p-4 border">Budget</th>
+              <th className="p-4 border">All Bid Restaurants</th>
+              <th className="p-4 border">Participated Restaurants</th>
+              <th className="p-4 border">Restaurant Accepted By User</th>
             </tr>
           </thead>
           <tbody>
             {bids.map((bid) => (
               <tr key={bid.id} className="text-sm hover:bg-[#ece0f2]">
                 <td className="p-4 border">{bid.userName}</td>
-                <td className="p-4 border">{bid.dateTime}</td>
-                <td className="p-4 border">{bid.typeOfEvent}</td>
-                <td className="p-4 border">₹{bid.bidAmount}</td>
+                <td className="p-4 border">{bid.contactInfo}</td>
+                <td className="p-4 border">{bid.eventType}</td>
+                <td className="p-4 border">{bid.noOfGuests}</td>
+                <td className="p-4 border">₹{bid.budget}</td>
+
+                {/* All Bid Restaurants */}
                 <td className="p-4 border">
-                  <span
-                    className={`px-2 py-1 rounded ${
-                      bid.status === "Active"
-                        ? "bg-green-100 text-green-600"
-                        : "bg-red-100 text-red-600"
-                    }`}
-                  >
-                    {bid.status}
-                  </span>
-                </td>
-                <td className="p-4 border flex gap-2">
                   <button
-                    className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
-                    onClick={() => handlePreview(bid)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    onClick={() =>
+                      openPopup(bid.allBidRestaurants, "All Bid Restaurants")
+                    }
                   >
-                    Preview
+                    More
                   </button>
+                </td>
+
+                {/* Participated Restaurants */}
+                <td className="p-4 border">
                   <button
-                    className="px-3 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600"
-                    onClick={() => handleDeleteBid(bid.id)}
+                    className="bg-green-500 text-white px-4 py-2 rounded"
+                    onClick={() =>
+                      openPopup(
+                        bid.participatedRestaurants,
+                        "Participated Restaurants"
+                      )
+                    }
                   >
-                    Delete
+                    More
+                  </button>
+                </td>
+
+                {/* Restaurant Accepted By User */}
+                <td className="p-4 border">
+                  <button
+                    className="bg-purple-500 text-white px-4 py-2 rounded"
+                    onClick={() =>
+                      openPopup(
+                        bid.acceptedByUser,
+                        "Restaurant Accepted By User"
+                      )
+                    }
+                  >
+                    More
                   </button>
                 </td>
               </tr>
@@ -108,10 +152,36 @@ const BiddingManagement = () => {
         </table>
       </div>
 
-      {/* Preview Modal */}
-      {selectedBid && (
-        <PreviewBidding bid={selectedBid} onClose={closePreview} />
-        
+      {/* Popup for Data */}
+      {popupVisible && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/2">
+            <h2 className="text-xl font-bold mb-4">{popupTitle}</h2>
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="text-left bg-gray-200">
+                  <th className="p-2 border">Restaurant Name</th>
+                  <th className="p-2 border">Offer Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {popupData &&
+                  popupData.map((item, index) => (
+                    <tr key={index} className="hover:bg-gray-100">
+                      <td className="p-2 border">{item.name}</td>
+                      <td className="p-2 border">₹{item.offerAmount}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+            <button
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
+              onClick={closePopup}
+            >
+              Close
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

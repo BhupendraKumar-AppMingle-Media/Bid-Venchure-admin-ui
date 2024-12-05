@@ -16,30 +16,67 @@ const PreviewRestaurantManagement = () => {
   const eventHistory = [
     {
       id: 1,
+      userName: "John Doe",
       eventType: "Birthday Party",
       dateTime: "2024-12-10 7:00 PM",
       noOfGuests: 50,
       budget: "$500",
+      rating: 4.8,
       status: "Completed",
       specialNotes: "Extra decoration required",
     },
     {
       id: 2,
+      userName: "Jane Smith",
       eventType: "Corporate Dinner",
       dateTime: "2024-11-20 8:00 PM",
       noOfGuests: 30,
       budget: "$750",
+      rating: 3.5,
       status: "Cancelled",
       specialNotes: "Client canceled last minute",
     },
     {
       id: 3,
+      userName: "Michael Johnson",
       eventType: "Wedding Reception",
       dateTime: "2024-10-15 6:30 PM",
       noOfGuests: 100,
       budget: "$2000",
+      rating: 4.9,
       status: "Ongoing",
       specialNotes: "Ensure premium service",
+    },
+  ];
+
+  // Example bidding history data
+  const biddingHistory = [
+    {
+      id: 1,
+      userName: "Alice Brown",
+      eventType: "Anniversary Party",
+      noOfGuests: 40,
+      bidByUser: "$600",
+      bidByRestaurant: "$550",
+      bidStatus: "Accepted",
+    },
+    {
+      id: 2,
+      userName: "David Wilson",
+      eventType: "Corporate Meeting",
+      noOfGuests: 20,
+      bidByUser: "$1000",
+      bidByRestaurant: "$950",
+      bidStatus: "Declined",
+    },
+    {
+      id: 3,
+      userName: "Emma Davis",
+      eventType: "Baby Shower",
+      noOfGuests: 30,
+      bidByUser: "$700",
+      bidByRestaurant: "$700",
+      bidStatus: "Completed",
     },
   ];
 
@@ -107,22 +144,23 @@ const PreviewRestaurantManagement = () => {
       </div>
 
       {/* Event History Section */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">Event History</h2>
         <table className="min-w-full bg-white border-collapse border border-gray-200">
           <thead>
             <tr className="bg-gray-200">
+              <th className="p-3 border border-gray-300 text-left">User Name</th>
               <th className="p-3 border border-gray-300 text-left">Event Type</th>
               <th className="p-3 border border-gray-300 text-left">Date/Time</th>
               <th className="p-3 border border-gray-300 text-left">No. of Guests</th>
               <th className="p-3 border border-gray-300 text-left">Budget</th>
               <th className="p-3 border border-gray-300 text-left">Status</th>
-              <th className="p-3 border border-gray-300 text-left">Special Notes</th>
             </tr>
           </thead>
           <tbody>
             {eventHistory.map((event) => (
               <tr key={event.id} className="hover:bg-gray-100">
+                <td className="p-3 border border-gray-300">{event.userName}</td>
                 <td className="p-3 border border-gray-300">{event.eventType}</td>
                 <td className="p-3 border border-gray-300">{event.dateTime}</td>
                 <td className="p-3 border border-gray-300">{event.noOfGuests}</td>
@@ -140,7 +178,47 @@ const PreviewRestaurantManagement = () => {
                     {event.status}
                   </span>
                 </td>
-                <td className="p-3 border border-gray-300">{event.specialNotes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Bidding History Section */}
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Bidding History by Restaurants</h2>
+        <table className="min-w-full bg-white border-collapse border border-gray-200">
+          <thead>
+            <tr className="bg-orange-500 text-white">
+              <th className="p-3 border border-gray-300 text-left">User Name</th>
+              <th className="p-3 border border-gray-300 text-left">Event Type</th>
+              <th className="p-3 border border-gray-300 text-left">Number of Guests</th>
+              <th className="p-3 border border-gray-300 text-left">Bid By User</th>
+              <th className="p-3 border border-gray-300 text-left">Bid By Restaurant</th>
+              <th className="p-3 border border-gray-300 text-left">Bid Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {biddingHistory.map((bid) => (
+              <tr key={bid.id} className="hover:bg-gray-100">
+                <td className="p-3 border border-gray-300">{bid.userName}</td>
+                <td className="p-3 border border-gray-300">{bid.eventType}</td>
+                <td className="p-3 border border-gray-300">{bid.noOfGuests}</td>
+                <td className="p-3 border border-gray-300">{bid.bidByUser}</td>
+                <td className="p-3 border border-gray-300">{bid.bidByRestaurant}</td>
+                <td className="p-3 border border-gray-300">
+                  <span
+                    className={`px-2 py-1 rounded text-xs ${
+                      bid.bidStatus === "Accepted"
+                        ? "bg-green-100 text-green-600"
+                        : bid.bidStatus === "Completed"
+                        ? "bg-blue-100 text-blue-600"
+                        : "bg-red-100 text-red-600"
+                    }`}
+                  >
+                    {bid.bidStatus}
+                  </span>
+                </td>
               </tr>
             ))}
           </tbody>

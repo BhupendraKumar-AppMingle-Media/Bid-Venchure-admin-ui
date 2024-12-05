@@ -61,7 +61,7 @@ const SideBar = () => {
   };
 
   return (
-    <div className="w-64 h-[calc(100vh-84px)] bg-[#83707e] shadow-lg fixed top-[84px] left-0 overflow-y-auto custom-scrollbar">
+    <div className="w-64 h-[calc(100vh-84px)] bg-[#83707e] shadow-lg fixed top-[84px] left-0 overflow-y-auto   overflow-x-hidden custom-scrollbar">
       <section className="w-64 h-full">
         <ul className="rounded-xl flex flex-col mt-4">
           {sideBarDatas.map((sideBarData, idx) => (
